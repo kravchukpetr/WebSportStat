@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if predicts%}
+	{% regroup predicts by get_group_country_league as league_list %}
+	{% for league in league_list %}
+    	<div>
+	    	 <fieldset class="header" data-toggle="collapse" data-target="#demo{{forloop.counter}}">
+   			 <legend class="headerlegend">{{ league.grouper }}</legend>
+		    <div id="demo{{forloop.counter}}" class="panel-collapse collapse show">
+				<table id = "SportTable" class="table">
+			        <tr>
+			          <th>Дата</th>
+			          <th>Матч</th>
+			          <th>Прогноз</th>
+			          <th>Хозяева</th>
+			          <th>Ничья</th>
+			          <th>Гости</th>
+			        </tr>
+				  {% for predict in league.list %}
+				    <tr class = "StandSportRow" data-href="{% url 'predict' pk=predict.pk %}">
+				      <td><a>{{ predict.MatchDate|date:'d.m.Y' }} </a></td>
+				      <td><a>{{ predict.TeamHome }} - {{ predict.TeamGuest }} </a></td>
+				      <td><a>{{ predict.PredictHome }} : {{ predict.PredictGuest }} </a></td>
+				      <td><a>{{ predict.ProbHome }} </a></td>
+				      <td><a>{{ predict.ProbDraw }} </a></td>
+				      <td><a>{{ predict.ProbGuest }} </a></td>
+				    </tr>    
+				  {% endfor %}
+				</table> 
+			</div>
+		</div>
+	{% endfor %}
+ {% endif %}
+{% endblock %}

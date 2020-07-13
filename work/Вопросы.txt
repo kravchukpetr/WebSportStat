@@ -1,0 +1,3 @@
+Как использовать related_name в DetailView
+<!-- {% for result in team.results_home.all %} -->
+

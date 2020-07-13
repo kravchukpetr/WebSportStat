@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+   
+<div class="row"><h2>{{ team.Team }}</h2></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+         {% if ImgBig %}
+            <img src="{{ ImgBig }}"  width="200" height="200">
+         {% endif %}
+        </div>
+        <div class="col-md-4">
+          <table  class="table">
+            <tr>   
+              <td>Страна</td>
+              <td style="font-weight: bold;">{{team.get_country_for_team}}</td>                  
+            </tr>
+            <tr>   
+              <td>Год основания</td>
+              <td style="font-weight: bold;">{{team.YearFound}}</td>                  
+            </tr>
+            <tr>   
+              <td>Город</td>
+              <td style="font-weight: bold;"></td>                  
+            </tr>
+          </table> 
+        </div>
+        <div class="col-md-4">
+          <table  class="table">
+            <tr>   
+              <td>Цвета</td>
+              <td style="font-weight: bold;">{{team.Color}}</td>                  
+            </tr>
+            <tr>   
+              <td>Стадион</td>
+              <td style="font-weight: bold;">{{team.Stadium}}</td>                  
+            </tr>
+            <tr>   
+              <td>Тренер</td>
+              <td style="font-weight: bold;">{{team.Coach}}</td>                  
+            </tr>
+          </table> 
+        </div>
+    </div>
+</div>
+
+ <div class="navbar">
+    <div class="navbar-inner">
+       <div class="container">
+          <ul class="nav nav-pills">
+             <li class="nav-item"><a class="nav-link active" href="#step1" data-toggle="tab">Результаты</a></li>
+             <li class="nav-item"><a class="nav-link" href="#step2" data-toggle="tab">Состав</a></li>
+             <li class="nav-item"><a class="nav-link" href="#step3" data-toggle="tab">Статистика</a></li>
+          </ul>
+       </div>
+    </div>
+ </div>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="step1">
+     <br>
+     <div class="container">
+      <h2>{{ season }}</h2>
+
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+            Сезон
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for season in seasons %}
+              <a class="dropdown-item" href="{% url 'team' TeamID season.Season %}">{{ season.Season }}</a><br>
+            {% endfor %}
+          </div>
+      </div>
+      <table  class="table">
+        <tr>
+          <th>Тур</th>
+          <th>Дата</th>
+          <th>Дома</th>
+          <th>Гости</th>
+          <th>Результат</th>
+        </tr>
+      {% for result in results_list %}
+      <tr>   
+          <td>{{ result.Tour }}</td>
+          <td>{{ result.MatchDate|date:'Y-m-d' }}</td>
+          <td><a href="{% url 'team' pk=result.IDTeamHome %}">{{ result.TeamHome }}</td>
+          <td><a href="{% url 'team' pk=result.IDTeamGuest %}">{{ result.TeamGuest }}</td>
+          <td>{{ result.GoalHome }} - {{ result.GoalGuest }}</td>
+       </tr>
+      {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="tab-pane" id="step2">
+     <br>
+     <div class="container">
+     </div>
+  </div>
+  <div class="tab-pane" id="step3">
+     <br>
+     <div class="container">
+     </div>
+  </div>
+</div>
+{% endblock %}

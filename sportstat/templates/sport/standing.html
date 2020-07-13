@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+{% load sport_ext %}
+<div class="alert alert-primary" role="alert">
+  <div id="container" style="white-space:nowrap">
+    <div id="image" style="display:inline;">
+       {% if country_img %}
+          <img src="{{MEDIA_URL}}{{country_img}}.png" width="40" height="40">
+       {% endif %}
+    </div>
+    <div id="texts" style="display:inline; white-space:nowrap;"> 
+      {{ country }} - 
+    </div>
+    <div id="image" style="display:inline;">
+       {% if league_img %}
+          <img src="{{MEDIA_URL}}{{league_img}}" width="40" height="40">
+       {% endif %}
+    </div>
+    <div id="texts" style="display:inline; white-space:nowrap;"> 
+      {{ league }} - {{ season_id }}
+    </div>
+  </div>     
+</div>
+
+<div class="btn-group">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Страна
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for country in countries %}
+        <a class="dropdown-item" href="{% url 'standings' country.pk season_id %}">{{ country.Country }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Лига
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for league in leagues %}
+        <a class="dropdown-item" href="{% url 'standings' country_id season_id league.pk %}">{{ league.League }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Сезон
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for season in seasons %}
+        <a class="dropdown-item" href="{% url 'standings' country_id season.Season league_id %}">{{ season.Season }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br>
+    {% if standings %}
+      <!-- <div id = "StandingDiv"> -->
+      <table id = "StandingDiv" class="table">
+        <tr>
+          <th> </th>
+          <th> </th>
+          <th>Команда</th>
+          <th>М</th>
+          <th>В</th>
+          <th>Н</th>
+          <th>П</th>
+          <th>РМ</th>
+          <th>О</th>
+          <th>Результаты</th>
+<!--           <th>Результаты2</th> -->
+        </tr>
+      {% for standing in standings %}
+          <tr>            
+            <td class = "StandPosition StandPosType{{standing.PosType}}">{{standing.Position}}</td>
+            <td>
+            {% if dict_res_str.TeamImg %}
+            <img class "TeamSmall" src= {{ dict_res_str.TeamImg|index:forloop.counter0 }} width="30" height="30">
+            {% elif standing.CountryEng %}
+            <img class "TeamSmall" src="/files/media/{{standing.CountryEng}}.png" width="30" height="30">
+            {% endif %}</td>
+            <td><a href="{% url 'team' pk=standing.IDTeam %}">{{standing.Team}}</td>
+            <td>{{standing.CountGames}}</td>
+            <td>{{standing.CountWin}}</td>
+            <td>{{standing.CountDraw}}</td>
+            <td>{{standing.CountLose}}</td>
+            <td>{{standing.GoalDifference}}</td>
+            <td>{{standing.CountPoint}}</td>
+     <!--          <td><span class = "ResultClassWin Result1"> B </span><span class = "ResultClassLose  Result2"> П </span><span class = "ResultClassDraw  Result3"> Н </span></td> -->
+              <td>{{ dict_res_str.LastGamesResult|index:forloop.counter0 |safe}}</td>
+          </tr>          
+      {% endfor %}
+    </table>
+    <!-- </div> -->
+    {% endif %}
+{% endblock %}

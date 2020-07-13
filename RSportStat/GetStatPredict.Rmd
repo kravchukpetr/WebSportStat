@@ -1,0 +1,110 @@
+---
+title: "GetStatPredict"
+author: "Petr Kravchuk"
+date: '13 января 2018 г '
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("SportStatFunc.R")
+ConStr <- 'driver={SQL Server};server=localhost;database=SportStat;trusted_connection=true'
+```
+
+<head>
+  <meta charset="utf-8">
+  <title>Project</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<div class="container">
+<div class="jumbotron">
+ <table border="1">
+  <tr>
+   <td>
+## Standings
+
+```{r Standings, echo = FALSE}
+CountryList <- GetCountryDf(ConStr, 1)
+SeasonList <- GetSeasonDf(ConStr)
+LeagueList <- GetLeagueDf(ConStr, GetCountryDf(ConStr, 1)[1,1], 1)
+
+inputPanel(
+  selectInput("season", label = "Season",
+              choices = SeasonList, selected = subset(SeasonList, IsCurrentSeason==1)$Season),
+  selectInput("country", label = "Country",
+              choices = CountryList, selected = CountryList[1,1]),
+  selectInput("league", label = "League",
+              choices = LeagueList, selected = LeagueList[1])
+  ##selectizeInput("leagueid", label = "Leagueid", choices = LeagueList, selected = NULL, multiple = TRUE,
+  ##             options = NULL)
+)
+
+renderTable({
+Season = input$season
+Country = input$country
+League = input$league
+TypeTable = 'Всего'
+IsDetailTable =  0 
+TypeTour = 'Full'
+LastTours = 'NULL'
+TourNumber = 'NULL'
+TourDate = 'NULL'
+res <- GetStandingsDf(ConStr, Season, Country, League, TypeTable, IsDetailTable, TypeTour, LastTours, TourNumber, TourDate)
+res
+})
+```
+</td>
+
+
+<td>
+## Forecast
+
+You can also embed plots, for example:
+
+```{r Forecast, echo=FALSE}
+inputPanel(
+selectInput("tour", label = "Tour:",
+              choices = c(1:38), selected = 2)
+)
+renderTable({
+Season = input$season
+Country = input$country
+League = input$league
+TourNumber = input$tour
+TourNumberPrev <-  as.integer(TourNumber) - 1
+TourDate = 'NULL'
+#my_df <- GetResultsDf(ConStr, 5, Country, League, Season, TourNumberPrev, 'NULL')
+#df <- ConvertResultsDf(my_df)
+#model <- glm(goals ~ df$home + df$team + df$opponent, family=poisson(link=log), data=df)
+to_predict <-  GetResultsDf(ConStr, 2, Country, League, Season, TourNumber, 'NULL')
+#to_predict <- GetPredictList(to_predict, model)
+to_predict
+})
+```
+
+</td>
+</tr>
+<tr>
+<td>
+```{r Match, echo=FALSE}
+ reactive({
+Season = input$season
+Country = input$country
+League = input$league
+TourNumber = input$tour
+to_predict <-  GetResultsDf(ConStr, 2, Country, League, Season, TourNumber, 'NULL')
+inputPanel(
+
+selectInput("match", label = "Match:",
+              #choices = as.data.frame.matrix(paste0(to_predict$TeamHome, " - ", to_predict$TeamGuest)))
+            choices = to_predict$TeamHome)
+    )
+  })
+
+```
+</td>
+</tr>
+</div>
+</div>

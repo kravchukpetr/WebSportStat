@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Here are your Seasons:</h1>
+
+    {% if seasons%}
+
+    <ol>
+      <li>Season Info</li>
+      {% for season in seasons %}
+        <ul>
+          <li>IDSeason: {{season.IDSeason}}</li>
+          <li>Season: {{season.Season}}</li>
+        </ul>
+        {% endfor %}
+    </ol>
+    {% endif %}
+{% endblock %}

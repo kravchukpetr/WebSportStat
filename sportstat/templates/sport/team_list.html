@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex">
+	<div class="p-2">
+	  <div class="dropdown">
+	    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+	      Страна
+	    </button>
+	    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	      {% for country in countries %}
+	        <a class="dropdown-item" href="{% url 'teams' country.pk %}">{{ country.Country }}</a><br>
+	      {% endfor %}
+	    </div>
+	  </div>
+	</div>
+	<div class="p-2">
+		{% if country %}
+		<div id="container" style="white-space:nowrap">
+		    <div id="image" style="display:inline;">
+		       {% if country_img %}
+		          <img class "TeamSmall" src="{{MEDIA_URL}}{{country_img}}.png" width="40" height="40">
+		       {% endif %}
+		    </div>
+		    <div id="texts" style="display:inline; white-space:nowrap;"> 
+		      {{ country }} 
+		    </div>
+		</div>
+		{% endif %}
+	</div>
+</div>
+
+{% if teams%}
+<table id = "SportTable" class="table">
+  {% for team in teams %}
+        <tr class = "StandSportRow" data-href="{% url 'team' pk=team.pk %}">
+	      <td>
+	        <div id="container" style="white-space:nowrap">
+	          <div id="image" style="display:inline;">
+	           {% if team.get_small_img_url %}
+	             <img src="{{ team.get_small_img_url }}" width="30" height="30">
+	           {% endif %}
+	          </div>
+	          <div id="texts" style="display:inline; white-space:nowrap;"> 
+	            <a>{{ team.Team  }}</a>
+	          </div>
+	        </div> 
+	      </td>
+	    </tr> 
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

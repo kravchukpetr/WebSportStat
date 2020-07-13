@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if sports%}
+     <table id = "SportTable" class="table">
+      {% for sport in sports %}
+      <tr class = "StandSportRow">
+      	<td>
+	      <div id="container" style="white-space:nowrap">
+		    <div id="image" style="display:inline;">
+		       {% if sport.SportEng %}
+		         <img class "CountryListImg" src="/files/media/{{sport.SportEng}}.png" width="40" height="40">
+		       {% endif %}
+		    </div>
+		    <div id="texts" style="display:inline; white-space:nowrap;"> 
+		      <a href="{% url 'countries' %}" class="btn btn-simple">{{sport.Sport}}</a>
+		    </div>
+		  </div> 
+	  	</td>
+	  </tr>    
+      {% endfor %}
+      </table>
+    {% endif %}
+{% endblock %}

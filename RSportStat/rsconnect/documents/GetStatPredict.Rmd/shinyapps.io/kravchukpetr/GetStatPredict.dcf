@@ -1,0 +1,12 @@
+name: GetStatPredict
+title: GetStatPredict
+username:
+account: kravchukpetr
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 257663
+bundleId: 1179987
+url: https://kravchukpetr.shinyapps.io/GetStatPredict/
+when: 1516204072.09631
+asMultiple: FALSE
+asStatic: FALSE

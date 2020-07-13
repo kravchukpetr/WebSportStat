@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+{% load sport_ext %}
+<table id = "SportTable" class="table">
+	<tr>
+	  <th>Дата</th>
+	  <th>Матч</th>
+	  <th>Прогноз</th>
+	  <th>Хозяева</th>
+	  <th>Ничья</th>
+	  <th>Гости</th>
+	</tr>
+	<tr>
+	  <td><a>{{ object.MatchDate|date:'d.m.Y' }} </a></td>
+	  <td><a>{{ object.TeamHome }} - {{ object.TeamGuest }} </a></td>
+	  <td><a>{{ object.PredictHome }} : {{ object.PredictGuest }} </a></td>
+	  <td><a>{{ object.ProbHome }} </a></td>
+	  <td><a>{{ object.ProbDraw }} </a></td>
+	  <td><a>{{ object.ProbGuest }} </a></td>
+	</tr>    
+</table> 
+
+<div>
+<fieldset class="header" data-toggle="collapse" data-target="#demo1">
+<legend class="headerlegend">Последние результаты</legend>
+	<div id="demo1" class="panel-collapse collapse show">
+		<div class="container">
+		    <div class="row">
+		        <div class="col-md-6">
+		        	<div class="row">
+		        		<h3 class="text-center">{{object.TeamHome}}</h3>
+		        	</div>
+		        	{% if results_home%}
+					  <table  class="table">
+					    <tr>
+					      <th>Тур</th>
+					      <th>Дата</th>
+					      <th>Дома</th>
+					      <th>Гости</th>
+					      <th>Результат</th>
+					    </tr>
+						  {% for result in results_home %}
+						      <tr>   
+						        <td>{{result.Tour}}</td>
+						        <td>{{result.MatchDate|date:'d.m.Y'}}</td>
+						        <td><a href="{% url 'team' pk=result.IDTeamHome %}">{{result.TeamHome}}</td>
+						        <td><a href="{% url 'team' pk=result.IDTeamGuest %}">{{result.TeamGuest}}</td>
+						        <td  class = "ResultWinLoose{{dict_result.result_home_total|index:forloop.counter0}}">{{result.GoalHome}} - {{result.GoalGuest}}</td>
+						     </tr>
+						    {% endfor %}
+						</table>
+					{% endif %}
+		        </div>
+		        <div class="col-md-6">
+		        	<div class="row">
+		        		<h3 class="text-center">{{object.TeamGuest}}</h3>
+		        	</div>
+		        	{% if results_guest%}
+					  <table  class="table">
+					    <tr>
+					      <th>Тур</th>
+					      <th>Дата</th>
+					      <th>Дома</th>
+					      <th>Гости</th>
+					      <th>Результат</th>
+					    </tr>
+					  	{% for result in results_guest %}
+					      <tr>   
+					        <td>{{result.Tour}}</td>
+					        <td>{{result.MatchDate|date:'d.m.Y'}}</td>
+					        <td><a href="{% url 'team' pk=result.IDTeamHome %}">{{result.TeamHome}}</td>
+					        <td><a href="{% url 'team' pk=result.IDTeamGuest %}">{{result.TeamGuest}}</td>
+					        <td   class = "ResultWinLoose{{dict_result.result_guest_total|index:forloop.counter0}}">{{result.GoalHome}} - {{result.GoalGuest}}</td>
+					     </tr>
+					    {% endfor %}
+						</table>
+					{% endif %}
+		        </div>
+		     </div>
+		  </div>
+	  </div>
+  </div>
+<div>
+<fieldset class="header" data-toggle="collapse" data-target="#demo2">
+<legend class="headerlegend">Личные встречи</legend>
+	<div id="demo2" class="panel-collapse collapse show">
+    	{% if results_together%}
+		  <table  class="table">
+		    <tr>
+		      <th>Тур</th>
+		      <th>Дата</th>
+		      <th>Дома</th>
+		      <th>Гости</th>
+		      <th>Результат</th>
+		    </tr>
+		  	{% for result in results_together %}
+		      <tr>   
+		        <td>{{result.Tour}}</td>
+		        <td>{{result.MatchDate|date:'d.m.Y'}}</td>
+		        <td><a href="{% url 'team' pk=result.IDTeamHome %}">{{result.TeamHome}}</td>
+		        <td><a href="{% url 'team' pk=result.IDTeamGuest %}">{{result.TeamGuest}}</td>
+		        <td>{{result.GoalHome}} - {{result.GoalGuest}}</td>
+		     </tr>
+		    {% endfor %}
+			</table>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

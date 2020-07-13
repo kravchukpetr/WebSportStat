@@ -1,0 +1,3 @@
+cd F:\LIBERTY\Docs\SportStat
+activate MyDjangoEnv
+ipython notebook

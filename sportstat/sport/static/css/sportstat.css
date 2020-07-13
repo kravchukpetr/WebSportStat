@@ -1,0 +1,70 @@
+/*h1 {
+    color: red;
+}
+
+li a {
+    color: red;
+}*/
+
+.TeamInfoContainer {
+    display: flex; 
+}
+
+.ColTeaminfo {
+    flex: 4; 
+}
+
+
+.StandSportRowActive {
+	background-color: #AFEEEE;
+}
+.StandPosition {
+  text-align: center;
+}
+
+.pos_type_out {
+  background-color: #FA8072;
+}
+.pos_type_chl
+{
+background-color: #98FB98;
+}
+
+.pos_type_le
+{
+background-color: #AFEEEE;
+}
+
+.ResultClassWin
+{
+background-color: green;
+border-color: transparent;
+border-style: solid; /* Стиль границы */
+padding: 5px; /* Поля вокруг текста */
+border-radius: 10px;
+color: white
+}
+
+.ResultClassLose
+{
+background-color: red;
+border-color: transparent;
+border-style: solid; /* Стиль границы */
+padding: 5px; /* Поля вокруг текста */
+border-radius: 10px;
+color: white
+}
+
+.ResultClassDraw
+{
+background-color: orange;
+border-color: transparent;
+border-style: solid; /* Стиль границы */
+padding: 5px; /* Поля вокруг текста */
+border-radius: 10px;
+color: white
+}
+
+/*td.col1 { background: red; color: white; }
+td.col2 { background: orange; color: gray; }
+td.col3 { background: yellow; }*/

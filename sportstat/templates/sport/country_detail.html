@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+
+{# <div id="rootwizard"> #}
+   <div class="d-flex justify-content-center">
+   <div id="container" style="white-space:nowrap;">
+    <div id="image" style="display:inline;">
+     {% if country.CountryEng %}
+       <img class "CountryListImg" src="{{MEDIA_URL}}{{country.CountryEng}}.png" width="40" height="40">
+     {% endif %}
+    </div>
+    <div id="texts" style="display:inline; white-space:nowrap;"> 
+      <a style="font-weight: bold;">{{ country.Country }}</a>
+    </div>
+  </div>
+  </div> 
+   <div class="navbar">
+      <div class="navbar-inner">
+         <div class="container">
+            <ul class="nav nav-pills">
+               <li class="nav-item"><a class="nav-link active" href="#step1" data-toggle="tab">Лиги</a></li>
+               <li class="nav-item"><a class="nav-link" href="#step2" data-toggle="tab">Команды</a></li>
+               <li class="nav-item"><a class="nav-link" href="#step3" data-toggle="tab">Статистика</a></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+   <div class="tab-content">
+      <div class="tab-pane active" id="step1">
+         <br>
+         <div class="container">
+            <table id = "SportTable" class="table">
+            {% for league in country.leagues.all %}
+               <tr class = "StandSportRow" data-href="{% url 'standings' country_id=country.pk %}">
+                  <td>
+                     <div id="container" style="white-space:nowrap">
+                        <div id="image" style="display:inline;">
+                         {% if league.LeagueImgSrc %}
+                           <img class "CountryListImg" src="{{MEDIA_URL}}{{league.LeagueImgSrc}}" width="40" height="40">
+                         {% endif %}
+                        </div>
+                        <div id="texts" style="display:inline; white-space:nowrap;">
+                           <a>{{ league.League }}</a>
+                        </div>
+                     </div> 
+                  </td>
+               </tr>  
+            {% endfor %}
+            </table>
+         </div>
+      </div>
+      <div class="tab-pane" id="step2">
+         <br>
+         <div class="container">
+         <table id = "SportTable" class="table">
+         {% for team in country.teams.all %}
+            <tr class = "StandSportRow" data-href="{% url 'team' pk=team.pk %}">
+               <td>
+                  <div id="container" style="white-space:nowrap">
+                     <div id="image" style="display:inline;">
+                       {% if team.get_small_img_url %}
+                         <img class "CountryListImg" src="{{team.get_small_img_url}}" width="40" height="40">
+                       {% endif %}
+                     </div>
+                     <div id="texts" style="display:inline; white-space:nowrap;">
+                        <a>{{ team.Team }}</a>
+                     </div>
+                  </div> 
+               </td>
+            </tr>  
+         {% endfor %}
+         </table>
+         </div>
+      </div>
+      <div class="tab-pane" id="step3">
+         <br>
+         <div class="container">
+         </div>
+      </div>
+   </div>
+{# </div> #}
+
+{% endblock %}

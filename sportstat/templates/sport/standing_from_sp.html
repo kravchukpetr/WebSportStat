@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Here are your Standings:</h1>
+
+    {% if standings %}
+    <p>Standing Info</p>
+      <table>
+        <tr>
+          <th>Country</th>
+          <th>Season</th>
+          <th>League</th>
+        </tr>
+      {% for standing in standings %}
+          <tr>
+            {% for col in standing %}
+                <td>{{col}}
+                </td>
+            {% endfor %}
+          </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

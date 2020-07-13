@@ -1,0 +1,512 @@
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#SeasonParametr <- toString(filter(Seasons, (Seasons$IsCurrentSeason == 1))$Season)
+for(SeasonParametr in Seasons){
+for(CountryParametr in Countries$Country) {
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)
+if (IsCheckIsExistSeasonForCountry == 1)
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(CountryParametr)
+print(LeagueParametr)
+print(SeasonParametr)
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+CheckIsExistSeasonForCountry('Россия', 'Премьер-лига', '2006-2007')
+CheckIsExistSeasonForCountry("Россия", "Премьер-лига", "2006-2007")
+CheckIsExistSeasonForCountry("Россия", "Премьер-лига", "2006-2007")
+source("SportStatFunc.R")
+CheckIsExistSeasonForCountry("Россия", "Премьер-лига", "2006-2007")
+CheckIsExistSeasonForCountry("Россия", "Премьер-лига", "2006-2007")$IsExist
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#SeasonParametr <- toString(filter(Seasons, (Seasons$IsCurrentSeason == 1))$Season)
+for(SeasonParametr in Seasons){
+for(CountryParametr in Countries$Country) {
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+if (IsCheckIsExistSeasonForCountry == 1)
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(CountryParametr)
+print(LeagueParametr)
+print(SeasonParametr)
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+GetCountryDf(1)
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#SeasonParametr <- toString(filter(Seasons, (Seasons$IsCurrentSeason == 1))$Season)
+for(CountryParametr in Countries$Country) {
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+for(SeasonParametr in Seasons){
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+if (IsCheckIsExistSeasonForCountry == 1)
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(CountryParametr)
+print(LeagueParametr)
+print(SeasonParametr)
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+GetCountryDf(1)
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#SeasonParametr <- toString(filter(Seasons, (Seasons$IsCurrentSeason == 1))$Season)
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons){
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+if (IsCheckIsExistSeasonForCountry == 1)
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(SeasonParametr)
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#SeasonParametr <- toString(filter(Seasons, (Seasons$IsCurrentSeason == 1))$Season)
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+Countries <- filter(Countries, Countries$Country = "Португалия")
+Countries <- filter(Countries, Countries$Country == "Португалия")
+Countries
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+Seasons
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons$Season){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+#Countries <- filter(Countries, Countries$Country == "Португалия")
+Countries
+Seasons
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons$Season){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+# ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+Countries <- filter(Countries, Countries$Country == "Англия")
+Countries
+Seasons
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+for(SeasonParametr in Seasons$Season){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+NTourFrom <-  2
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+}
+}
+}
+}
+NTourFrom = 2
+NTour = 38
+SeasonParametr = "2005-2007"
+CountryParametr = 'Англия'
+LeagueParametr = 'Премьер-лига'
+LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+NTourFrom = 2
+NTour = 38
+SeasonParametr = "2005-2006"
+CountryParametr = 'Англия'
+LeagueParametr = 'Премьер-лига'
+LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+df <- GetResultsForPredictDf(ConStr, 5, CountryParametr, LeagueParametr, SeasonParametr, NTour, 'NULL', 'NULL', 'NULL')
+dfl <- ConvertResultsDf(df)
+ResultPredict <- RunPrediction(1, dfl, CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+ResultPredict = dfl[FALSE,]
+NTourFrom:NTour
+for (row in NTourFrom:NTour) {
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+to_predict <-  GetResultsForPredictDf(ConStr, 2, CountryParametr, LeagueParametr, SeasonParametr, row, 'NULL', 'NULL', 'NULL')
+to_predict <- GetPredictList(to_predict, model)
+WritePredictToDB(ConStr, to_predict)
+if(nrow(ResultPredict)==0){
+ResultPredict <- to_predict
+} else {
+ResultPredict <- rbind(ResultPredict, to_predict)
+}
+}
+for (row in NTourFrom:NTour) {
+print(row)
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+to_predict <-  GetResultsForPredictDf(ConStr, 2, CountryParametr, LeagueParametr, SeasonParametr, row, 'NULL', 'NULL', 'NULL')
+to_predict <- GetPredictList(to_predict, model)
+WritePredictToDB(ConStr, to_predict)
+if(nrow(ResultPredict)==0){
+ResultPredict <- to_predict
+} else {
+ResultPredict <- rbind(ResultPredict, to_predict)
+}
+}
+row <- 2
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+df_for_model
+to_predict <-  GetResultsForPredictDf(ConStr, 2, CountryParametr, LeagueParametr, SeasonParametr, row, 'NULL', 'NULL', 'NULL')
+to_predict
+to_predict <- GetPredictList(to_predict, model)
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+row <- 3
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+df_for_model
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+to_predict <-  GetResultsForPredictDf(ConStr, 2, CountryParametr, LeagueParametr, SeasonParametr, row, 'NULL', 'NULL', 'NULL')
+to_predict
+to_predict <- GetPredictList(to_predict, model)
+SeasonParametr = "2006-2007"
+CountryParametr = 'Англия'
+LeagueParametr = 'Премьер-лига'
+df <- GetResultsForPredictDf(ConStr, 5, CountryParametr, LeagueParametr, SeasonParametr, NTour, 'NULL', 'NULL', 'NULL')
+dfl <- ConvertResultsDf(df)
+row <- 2
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+df_for_model
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+source("SportStatFunc.R")
+Seasons <- GetSeasonDf()
+Countries <- GetCountryDf(1)
+Countries <- filter(Countries, Countries$Country == "Англия")
+Countries
+Seasons
+for(CountryParametr in Countries$Country) {
+print(CountryParametr)
+Leagues <- GetLeagueDf(CountryParametr, 1)
+for(LeagueParametr in Leagues$League) {
+print(LeagueParametr)
+CountSeason <- 1
+for(SeasonParametr in Seasons$Season){
+print(SeasonParametr)
+IsCheckIsExistSeasonForCountry <- CheckIsExistSeasonForCountry(CountryParametr, LeagueParametr,SeasonParametr)$IsExist
+print(IsCheckIsExistSeasonForCountry)
+if (IsCheckIsExistSeasonForCountry == "1")
+{
+if (CountSeason == 1) {NTourFrom <-  3} else {NTourFrom <-  2}
+NTour <-  GetNextTour(1, CountryParametr, LeagueParametr,SeasonParametr)$Tour
+print(NTourFrom)
+print(NTour)
+ResultPredict <- LoadPrediction(CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour)
+CountSeason <- CountSeason + 1
+}
+}
+}
+}
+runApp('ShinyAppSport.R')
+TeamHome <- to_predict[row, "TeamHome"]
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+CountryList <- c("Все", as.vector(GetCountryDf(1)))
+CountryList
+CountryList <- as.vector(GetCountryDf(1))
+CountryList
+c("Все", CountryList)
+c("Все", CountryList$Country)
+c("Все", CountryList$Country[2])
+c("Все", CountryList$Country[1])
+c("Все", CountryList])
+c("Все", CountryList)
+c("Все", CountryList)
+CountryList
+CountryList$Country
+c("Все", CountryList$Country)
+CountryList <- as.vector(GetCountryDf(1))
+c(CountryList$Country, "Все")
+c(CountryList$Country[1], "Все")
+c(CountryList$Country[1,], "Все")
+c(CountryList$Country, "Все")
+c(CountryList$Country)
+CountryList <- GetCountryDf(1)
+CountryList
+CountryList$Country
+c(CountryList$Country, "Все")
+CountryList <- GetCountryDf(1)
+CountryList$Country
+c(CountryList$Country, "Все")
+rbind(CountryList$Country, "Все")
+rbind(CountryList$Country, "Все")
+str(CountryList$Country)
+CountryList <- as.vector(GetCountryDf(1))
+str(CountryList$Country)
+CountryList <- as.vector(GetCountryDf(1))
+str(CountryList)
+CountryList <- as.vector(GetCountryDf(1))
+str(CountryList)
+str(CountryList$Country)
+CountryList[1,1]
+CountryList[1,]
+с(CountryList[1,], "Все")
+c(CountryList[1,], "Все")
+CountryList[1,]
+as.vector(CountryList[1,])
+as.vector(CountryList[])
+c(as.vector(CountryList[]), "Все")
+CountryList <- GetCountryDf(1)
+str(CountryList)
+avector <- CountryList[ , "Country"]
+str(avector)
+avector <- CountryList[ , "Country", drop=FALSE]
+str(avector)
+c(avector, "Все")
+tst <- c(avector, "Все")
+tst
+avector <- dplyr::pull(aframe, Country)
+avector <- dplyr::pull(CountryList, Country)
+str(avector)
+tst <- c(avector, "Все")
+tst
+avector <- data[["Country"]]
+CountryList <- GetCountryDf(1)
+avector <-  CountryList[["Country"]]
+str(avector)
+avector <-as.vector(unlist(CountryList[["Country"]]))
+str(avector)
+tst <- c(as.vector(unlist(CountryList[["Country"]])) , "Все")
+tst
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+GetResultsDf(1, "Англия", NA, "2018-2019", "NULL", "02.01.2019", "02.01.2019",1)
+source("SportStatFunc.R")
+GetResultsDf(1, "Англия", NA, "2018-2019", "NULL", "02.01.2019", "02.01.2019",1)
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+GetResultsDf(1, "Англия", NA, "2018-2019", "NULL", "2018-02-04", "2018-02-04",1)
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+return(my_df) #my_df
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+TypeSelect = 7
+TeamList = "Арсенал;Манчестер Юнайтед"
+GetResultsForPredictDf(TypeSelect, "Англия", NA, "2018-2019", "NULL", "2018-01-01", "2018-12-31", TeamList)
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+RunPrediction <- function(IsExistDf, df, CountryParametr, LeagueParametr, SeasonParametr, NTourFrom, NTour){
+if (IsExistDf==0){
+df <- GetResultsForPredictDf(5, CountryParametr, LeagueParametr, SeasonParametr, NTour, 'NULL', 'NULL', 'NULL')
+dfl <- ConvertResultsDf(df)
+} else {dfl <- df}
+ResultPredict = dfl[FALSE,]
+for (row in NTourFrom:NTour) {
+df_for_model <- filter(dfl, (season !=SeasonParametr  | (season ==SeasonParametr  & tour < row)))
+model <- glm(goals ~ home + team + opponent, family=poisson(link=log), data=df_for_model)
+to_predict <-  GetResultsForPredictDf(2, CountryParametr, LeagueParametr, SeasonParametr, row, 'NULL', 'NULL', 'NULL')
+to_predict <- GetPredictList(to_predict, model)
+WritePredictToDB(ConStr, to_predict)
+if(nrow(ResultPredict)==0){
+ResultPredict <- to_predict
+} else {
+ResultPredict <- rbind(ResultPredict, to_predict)
+}
+}
+return(ResultPredict)
+}
+runApp('ShinyAppSport.R')
+library(shiny); runApp('ShinyAppSport.R')
+library(shiny); runApp('ShinyAppSport.R')
+runApp('ShinyAppSport.R')
+library(plotly)
+install.packages("plotly")
+library(plotly)
+p <- plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length,
+marker = list(size = 10,
+color = 'rgba(255, 182, 193, .9)',
+line = list(color = 'rgba(152, 0, 0, .8)',
+width = 2))) %>%
+layout(title = 'Styled Scatter',
+yaxis = list(zeroline = FALSE),
+xaxis = list(zeroline = FALSE))
+# Create a shareable link to your chart
+# Set up API credentials: https://plot.ly/r/getting-started
+chart_link = api_create(p, filename="scatter-styled")
+p <- plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length,
+marker = list(size = 10,
+color = 'rgba(255, 182, 193, .9)',
+line = list(color = 'rgba(152, 0, 0, .8)',
+width = 2))) %>%
+layout(title = 'Styled Scatter',
+yaxis = list(zeroline = FALSE),
+xaxis = list(zeroline = FALSE))
+chart_link = api_create(p, filename="scatter-styled")
+p <- plot_ly(midwest, x = ~percollege, color = ~state, type = "box")
+p
+p <- plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length,
+marker = list(size = 10,
+color = 'rgba(255, 182, 193, .9)',
+line = list(color = 'rgba(152, 0, 0, .8)',
+width = 2))) %>%
+layout(title = 'Styled Scatter',
+yaxis = list(zeroline = FALSE),
+xaxis = list(zeroline = FALSE))
+# Create a shareable link to your chart
+# Set up API credentials: https://plot.ly/r/getting-started
+p
+install.packages("psych")
+install.packages("reshape")
+library(shiny); runApp('ShinyAppSport.R')

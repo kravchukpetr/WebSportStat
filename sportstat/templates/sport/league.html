@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Страна
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for country in countries %}
+        <a class="dropdown-item" href="{% url 'leagues' country.pk %}">{{ country.Country }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+    {% if leagues%}
+    <table id = "SportTable" class="table">
+       {% for league in leagues %}
+        <tr class = "StandSportRow" data-href="{% url 'standings' country_id=league.IDCountry_id %}">
+	      <td>
+	        <div id="container" style="white-space:nowrap">
+	          <div id="image" style="display:inline;">
+	           {% if league.LeagueImgSrc %}
+	             <img class "CountryListImg" src="{{MEDIA_URL}}{{league.LeagueImgSrc}}" width="40" height="40">
+	           {% endif %}
+	          </div>
+	          <div id="texts" style="display:inline; white-space:nowrap;"> 
+	            <a>{{ league.League }}</a>
+	          </div>
+	        </div> 
+	      </td>
+	    </tr>      
+      {% endfor %}
+   	</table>
+    {% endif %}
+{% endblock %}

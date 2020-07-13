@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="btn-group">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Страна
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for country in countries %}
+        <a class="dropdown-item" href="{% url 'standings' country.IDCountry season_id %}">{{ country.Country }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      Сезон
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for season in seasons %}
+        <a class="dropdown-item" href="{% url 'standings' country_id season.Season %}">{{ season.Season }}</a><br>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% block content_ext %}
+
+{% endblock %}
+{% endblock %}

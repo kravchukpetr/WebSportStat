@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="alert alert-primary" role="alert">
+   <div id="container" style="white-space:nowrap">
+    <div id="image" style="display:inline;">
+       {% if country_img %}
+          <img src="{{MEDIA_URL}}{{country_img}}.png" width="40" height="40">
+       {% endif %}
+    </div>
+    <div id="texts" style="display:inline; white-space:nowrap;"> 
+      {{ country }} - 
+    </div>
+    <div id="image" style="display:inline;">
+       {% if league_img %}
+          <img src="{{MEDIA_URL}}{{league_img}}" width="40" height="40">
+       {% endif %}
+    </div>
+    <div id="texts" style="display:inline; white-space:nowrap;"> 
+      {{ league }} - {{ season_id }}
+    </div>
+  </div> 
+</div>
+
+
+    <div class="btn-group">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+          Страна
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% for country in countries %}
+            <a class="dropdown-item" href="{% url 'results' country.pk season_id %}">{{ country.Country }}</a><br>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+          Сезон
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% for season in seasons %}
+            <a class="dropdown-item" href="{% url 'results' country_id season.Season league_id %}">{{ season.Season }}</a><br>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+          Лига
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% for league in leagues %}
+            <a class="dropdown-item" href="{% url 'results' country_id season_id league.IDLeague %}">{{ league.League }}</a><br>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {% if results%}
+
+      <table  class="table">
+        <tr>
+          <th>Тур</th>
+          <th>Дата</th>
+          <th>Дома</th>
+          <th>Гости</th>
+          <th>Результат</th>
+        </tr>
+      {% for result in results %}
+          <tr>   
+            <td>{{result.Tour}}</td>
+            <td>{{result.MatchDate|date:'Y-m-d'}}</td>
+            <td><a href="{% url 'team' pk=result.IDTeamHome %}">{{result.TeamHome}}</td>
+            <td><a href="{% url 'team' pk=result.IDTeamGuest %}">{{result.TeamGuest}}</td>
+            <td>{{result.GoalHome}} - {{result.GoalGuest}}</td>
+         </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,1 @@
+driver={SQL Server};server=localhost;database=SportStat;trusted_connection=true
