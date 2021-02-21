@@ -2,7 +2,7 @@ import ParseResultsLib as prl
 
 now = prl.datetime.now()
 SeasonAllType = 2    #1 - Все сезоны; 2 - Текущий сезон
-TypeCountryInput = 2 #1 - Все страны; 2 - CountryInput
+TypeCountryInput = 1 #1 - Все страны; 2 - CountryInput
 CountryInput = 'Германия' #'NULL' 'Германия'
 IsExistsSource = 1   # 1 - Только имеющие источник 
 IsMainCountry = 'NULL' #'NULL'

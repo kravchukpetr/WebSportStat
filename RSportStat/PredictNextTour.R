@@ -1,8 +1,8 @@
 source("SportStatFunc.R")
 
 
-#Countries <- GetCountryDf(1)
-Countries <- GetCountryDf(1, 0, 'Германия')
+Countries <- GetCountryDf(1)
+#Countries <- GetCountryDf(1, 0, 'Германия')
 
 for(CountryParametr in Countries$Country) {
   Leagues <- GetLeagueDf(CountryParametr, 1)

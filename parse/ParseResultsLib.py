@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim:fileencoding=utf-8
+
 import pandas as pd
 import html5lib
 import re
@@ -9,12 +13,70 @@ from PIL import Image
 from io import BytesIO
 import logging
 import io
+import os
+import sys
+from datetime import timedelta, date
+import logging
+from scrapy.utils.log import configure_logging
 
 
-con = pyodbc.connect('Trusted_Connection=yes', driver = '{SQL Server}',server = 'localhost', port = '1433', database = 'SportStat', autocommit=True)
+# con = pyodbc.connect('Trusted_Connection=yes', driver = '{SQL Server}',server = 'localhost', port = '1433', database = 'SportStat', autocommit=True)
 
 logger = logging.getLogger()
 nations = {}
+
+def ParseResultsDaily(fname, log_dir, wf_id, IsDebug = 0):
+    """
+    Основная функция запуска ежедневного обновления
+    """
+
+    now = datetime.now()
+    config_dict = ReadConnConfig(fname)
+    con = pyodbc.connect(driver = config_dict['DRIVER'],server = config_dict['SERVER'], port = config_dict['PORT'], database = config_dict['DATABASE'], UID = config_dict['UID'], PWD = config_dict['PWD'], autocommit=True)
+
+    today_dt = date.today().strftime('%Y%m%d')    
+    log_dir = log_dir + '/logs/' + today_dt
+
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    logging.basicConfig(filename= log_dir + '/app.log', filemode='a+', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%H:%M:%S', level=logging.DEBUG)
+    logger = logging.getLogger()
+    # formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # log_path = log_dir
+    # log_file = '%s/%s.log' % (log_path, 'app')
+    # create_log_file(log_file)
+    # handler = logging.FileHandler(log_file, encoding='utf8')
+    # handler.setFormatter(formatter)
+    # logger.addHandler(handler)
+    # configure_logging(install_root_handler=False) #override default log settings
+    # logging.basicConfig(
+    #     handlers=[logging.FileHandler(log_dir + '/app.log', 'a+', 'utf-8')],
+    #     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    #     datefmt='%H:%M:%S',
+    #     level=logging.INFO #CRITICAL ERROR WARNING  INFO    DEBUG    NOTSET 
+    # )
+
+    logger.info('DailyUpdateSportStat')
+    logger.info('fname: ' + fname)
+    logger.info('log_dir: ' + log_dir)
+
+    SeasonAllType = 2    #1 - Все сезоны; 2 - Текущий сезон
+    TypeCountryInput = 1 #1 - Все страны; 2 - CountryInput
+    CountryInput = 'NULL' #'NULL' 'Германия'
+    IsExistsSource = 1   # 1 - Только имеющие источник 
+    IsMainCountry = 'NULL' #'NULL'
+    LeagueType = 1 #'NULL' 1 - Чемпионат страны 2 - Кубок страны 3 - Лига Чемпионов
+    #4 - Лига Европы 5 - Кубок УЕФА 6 - Суперкубок 7 - Кубок лиги
+    IsPrimary = 'NULL' #'NULL'
+
+    # WtiteLog(con, 1, wf_id, 1, 0, 'NULL', logger)
+    result_dict = ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary, IsDebug, logger)
+    # WtiteLog(con, 2, wf_id, result_dict['State'], result_dict['CntError'], ', '.join(result_dict['lst_error']), logger)
+    
+    LeagueType = 2
+    WtiteLog(con, 1, wf_id, 1, 0, 'NULL', logger)
+    result_dict = ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary, IsDebug, logger)
+    WtiteLog(con, 2, wf_id, result_dict['State'], result_dict['CntError'], ', '.join(result_dict['lst_error']), logger)
 
 def fGetResultList(tables, LeagueType):
     if isinstance(tables, list):
@@ -139,7 +201,7 @@ def WriteResultsToDB(con, IsAddValues, Country, Season, League, Results, LeagueT
             query = (
             "exec pSaveResult " + str(IsAddValues) + ", '" + Season + "' , '" + Country + "', '" + League + "', " + str(Tour) + ", "
                      + MatchDate + ", '" + TeamHome + "', '" + TeamGuest + "', " + str(GoalHome) + ", " + str(GoalGuest) + ", "
-                     +  str(IDResultType) + ", " + GoalHomePenalty + ", " + GoalGuestPenalty + ", " + str(IsError)) + ", '" + str(Stage) + "'"
+                     +  str(IDResultType) + ", " + GoalHomePenalty + ", " + GoalGuestPenalty + ", " + str(IsError) + ", '" + str(Stage) + "'")
             #print(query) 
             con.execute(query)
             con.commit()   
@@ -148,8 +210,19 @@ def WriteResultsToDB(con, IsAddValues, Country, Season, League, Results, LeagueT
             print(e)
             print(query)
 
-def ParseResults(SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary, IsDebug = 0):
-    CountryDict = GetCountryDict(TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary)
+def ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary, IsDebug = 0, logger = ''):
+    result_dict = {}
+    CntError = 0
+    lst_error = ''
+    CountryDict = {}
+    try:
+        CountryDict = GetCountryDict(con, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary)
+        # logging.info(CountryDict)
+        logging.info('Get country dict - Success')
+    except Exception as e:
+        CntError +=1
+        lst_error += 'Get country dict - Error: ' + str(e) + '\n'
+        logging.info('Get country dict - Error: ' + str(e))
     if IsDebug == 1:
         print(CountryDict)
     for key, country in CountryDict.items():
@@ -158,8 +231,14 @@ def ParseResults(SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, 
         Country = country["Country"]
         League = country["League"]
         LeagueType = country["LeagueType"]
-        SeasonLst = GetSeasonList(con, SeasonAllType, IDSeasonType)
-        print(f"{Country} {League}")
+        SeasonLst = []
+        try:
+            SeasonLst = GetSeasonList(con, SeasonAllType, IDSeasonType)
+            logging.info('Get season list - Success')
+        except Exception as e:
+            CntError +=1
+            lst_error += 'Get season list - Error: ' + str(e) + '\n'
+            logging.info('Get season list - Error: ' + str(e))
         
         for season in SeasonLst:
             url_list = []
@@ -172,17 +251,19 @@ def ParseResults(SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, 
                 url_list.append(url + '/32/')
                 #url_list.append(url + '/64/')
             
-            print(f"{season}")
             for url in url_list:
                 IsError = 0
-                print(url)
                 try:
                     df = pd.read_html(url)
                     tables = df[0]
-                except:
+                    logging.info('Get url ' + str(url) + ' - Success')
+                except Exception as e:
                     print("Error then load data from url", Country, season, League)
                     print(url)
                     IsError = 1
+                    CntError+=1
+                    lst_error += '"Error then load data from url ' + str(url) + str(e) + '\n'
+                    logging.info('Get url ' + str(url) + ' - Error' + str(url))
                 else:    
                     print("Download Success: ", Country, season, League)
                 if (IsError == 0):
@@ -190,20 +271,35 @@ def ParseResults(SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, 
                         Results = fGetResultList(tables, LeagueType)
                         if IsDebug ==1:
                             print(Results)
-                    except:
+                        logging.info('Get Results '+ str(Country) + str(season)  + str(League) + ' - Success')
+                    except Exception as e:
                         print("Error in loading ", Country, season, League)
                         print(url)
                         IsError = 1
+                        CntError+=1
+                        lst_error += 'Get Results Error ' + str(Country) + str(season)  + str(League) + str(e) + '\n'
+                        logging.info('Get Results '+ str(Country) + str(season)  + str(League) + ' - Error: ' + str(e))
                     else:    
                         print("Load Success: ", Country, season, League)
                 if (IsError == 0):
                     try:
                         WriteResultsToDB(con, 1, Country, season, League, Results, LeagueType)
-                    except:
+                        logging.info('Write Results to db '+ str(Country) + str(season)  + str(League) + ' - Success')
+                    except Exception as e:
                         print("Error in write to db ", Country, season, League)
                         print(url)
+                        CntError+=1
+                        lst_error += 'Write Results to db Error ' + str(Country) + str(season)  + str(League) + str(e) + '\n'
+                        logging.info('Write Results to db '+ str(Country) + str(season)  + str(League) + ' - Error: ' + str(e))
                     else:    
                         print("Write to DB Success: ", Country, season, League)
+    
+    State = 3 if CntError == 0 else 4
+    result_dict['State'] = State
+    result_dict['CntError'] = CntError
+    result_dict['lst_error'] = lst_error
+
+    return result_dict
 
 def parse_team_update_img(images, con, country):
     image_dict = {}
@@ -446,7 +542,7 @@ def GetSeasonList(con, Type, IDSeasonType):
         RowSeason = CursorSeason.fetchone()
     return SeasonArr
 
-def GetCountryDict(Type, Country = 'NULL', IsExistsSource = 1, IsMainCountry = 'NULL', LeagueType = 'NULL', IsPrimary = 'NULL'):
+def GetCountryDict(con, Type, Country = 'NULL', IsExistsSource = 1, IsMainCountry = 'NULL', LeagueType = 'NULL', IsPrimary = 'NULL'):
     CountryDict = {}
     CursorCountry = con.cursor()
     if Country != 'NULL':
@@ -454,21 +550,41 @@ def GetCountryDict(Type, Country = 'NULL', IsExistsSource = 1, IsMainCountry = '
     else:
         str_quote = ""
     querystring = f"select * from fGetCountrySource({Type}, {str_quote}{Country}{str_quote}, {IsExistsSource}, {IsMainCountry}, {LeagueType}, {IsPrimary})"
-    print(querystring)
-    ResultCountry = CursorCountry.execute(querystring)
-    RowCountry = CursorCountry.fetchone()
-    i=1
-    while RowCountry:
-        Country = {}
-        Country["CurrentSource"] = RowCountry[0]
-        Country["Country"] = RowCountry[1]
-        Country["League"] = RowCountry[2]
-        Country["IsMainCountry"] = RowCountry[3]
-        Country["LeagueType"] = RowCountry[4]
-        Country["IsPrimary"] = RowCountry[5]
-        Country["IDSeasonType"] = RowCountry[6]
-        CountryDict[i] = Country
-        i+=1
+    try:
+        ResultCountry = CursorCountry.execute(querystring)
         RowCountry = CursorCountry.fetchone()
+        i=1
+        while RowCountry:
+            Country = {}
+            Country["CurrentSource"] = RowCountry[0]
+            Country["Country"] = RowCountry[1]
+            Country["League"] = RowCountry[2]
+            Country["IsMainCountry"] = RowCountry[3]
+            Country["LeagueType"] = RowCountry[4]
+            Country["IsPrimary"] = RowCountry[5]
+            Country["IDSeasonType"] = RowCountry[6]
+            CountryDict[i] = Country
+            i+=1
+            RowCountry = CursorCountry.fetchone()
+    except Exception as e:
+        print(str(e))
     return CountryDict
 
+def WtiteLog(con, TypeWrite, WfId, WfStatus, CntError, ErrorMsg, logger):
+    """
+    Записывает лог ежедневного обновления в базу
+    """
+    try:
+        ErrorMsgStr = ErrorMsg if ErrorMsg == 'NULL' else "'" + ErrorMsg + "'"
+        query = ("exec pWriteLog " + str(TypeWrite) + ", " + str(WfId) + " , " + str(WfStatus) + ", "  + str(CntError) + ", "  + str(ErrorMsgStr))
+        con.execute(query)
+        con.commit()
+    except Exception as e:
+        logger.error('Error in Write Log: ' + str(e))
+def ReadConnConfig(filename):
+    config_dict = {}
+    with open(filename) as f:
+        for line in f:
+            (key, val) = line.split(' = ')
+            config_dict[key] = val.replace('\n', '')
+    return config_dict 

@@ -1,0 +1,1 @@
+python3 /projects/django_env/WebSportStat/parse/ParseResultsDaily.py
