@@ -76,7 +76,7 @@ def ParseResultsDaily(fname, log_dir, wf_id, IsDebug = 0):
     LeagueType = 2
     WtiteLog(con, 1, wf_id, 1, 0, 'NULL', logger)
     result_dict = ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSource, IsMainCountry, LeagueType, IsPrimary, IsDebug, logger)
-    WtiteLog(con, 2, wf_id, result_dict['State'], result_dict['CntError'], ', '.join(result_dict['lst_error']), logger)
+    WtiteLog(con, 2, wf_id, result_dict['State'], result_dict['CntError'], result_dict['lst_error'], logger)
 
 def fGetResultList(tables, LeagueType):
     if isinstance(tables, list):
