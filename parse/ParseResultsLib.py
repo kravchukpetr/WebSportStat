@@ -17,7 +17,7 @@ import os
 import sys
 from datetime import timedelta, date
 import logging
-from scrapy.utils.log import configure_logging
+# from scrapy.utils.log import configure_logging
 
 
 # con = pyodbc.connect('Trusted_Connection=yes', driver = '{SQL Server}',server = 'localhost', port = '1433', database = 'SportStat', autocommit=True)
@@ -254,7 +254,7 @@ def ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSou
             for url in url_list:
                 IsError = 0
                 try:
-                    df = pd.read_html(url)
+                    df = pd.read_html(url, encoding = "windows-1251")
                     tables = df[0]
                     logging.info('Get url ' + str(url) + ' - Success')
                 except Exception as e:
@@ -275,6 +275,7 @@ def ParseResults(con, SeasonAllType, TypeCountryInput, CountryInput, IsExistsSou
                     except Exception as e:
                         print("Error in loading ", Country, season, League)
                         print(url)
+                        print(str(e))
                         IsError = 1
                         CntError+=1
                         lst_error += 'Get Results Error ' + str(Country) + str(season)  + str(League) + str(e) + '\n'
