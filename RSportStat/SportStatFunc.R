@@ -7,7 +7,8 @@ library(readr)
 library(shinyBS)
 library(shinyjs)
 
-ConStr <- 'driver={SQL Server};server=localhost;database=SportStat;trusted_connection=true'
+#ConStr <- 'driver={SQL Server};server=localhost;database=SportStat;trusted_connection=true'
+ConStr <- 'driver={SQL Server};server=77.221.144.170;port=1433;database=SportStat;UID=SA;PWD=Sauth1900$'
 CurrentSeason <- '2019-2020'
 
 GetStandingsDf <- function(ConStr, Season = CurrentSeason, Country = 'Англия', League = 'Премьер-лига', TypeTable, IsDetailTable, TypeTour, LastTours, TourNumber, TourDate){

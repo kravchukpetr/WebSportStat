@@ -2,6 +2,12 @@ library(RODBC)
 library(RODBCext)
 dbhandle <- odbcDriverConnect('driver={SQL Server};server=localhost;database=SportStat;trusted_connection=true')
 source("SportStatFunc.R")
+dbhandle <- odbcDriverConnect('driver={SQL Server};server=77.221.144.170;port=1433;database=SportStat;UID=SA;PWD=Sauth1900$')
+
+SqlQueryStr <- paste0("exec pGetLeagueListByCountry NULL")
+my_df <- sqlQuery(dbhandle, SqlQueryStr)
+my_df
+close(dbhandle)
 
 Season = '2014-2015'
 Country = 'Италия'
